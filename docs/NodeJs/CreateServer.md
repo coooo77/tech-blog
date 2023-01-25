@@ -1,5 +1,5 @@
 ---
-title: deploy docusaurus
+title: create server
 tags:
   - NodeJs
   - backend
@@ -145,7 +145,7 @@ async function serveFile(filePath, contentType, response) {
 }
 ```
 
-基本上瀏覽SSR網站，等同於在一個資料夾中尋找檔案，根據route的資訊提供對應的檔案；舉個例子
+基本上瀏覽 SSR 網站，等同於在一個資料夾中尋找檔案，根據 route 的資訊提供對應的檔案；舉個例子
 
 ```html title="views/index.html"
 <!DOCTYPE html>
@@ -176,9 +176,9 @@ async function serveFile(filePath, contentType, response) {
 
 ![](./img/about_ssr.jpg)
 
-> * [Node.js Full Course for Beginners | Complete All-in-One Tutorial | 7 Hours](https://www.youtube.com/embed/f2EqECiTBL8)
-> * [HTML Favicon](https://www.w3schools.com/html/html_favicon.asp)
-> * [@use JSDoc](https://jsdoc.app/tags-type.html)
-> * [Rendering on the Web](https://web.dev/rendering-on-the-web/)
-> * [對於 SSR 的思考與使用場景](https://blog.kalan.dev/2020-11-23-rethink-ssr)
-> * [[教學] CSR 和 SSR 的差別是什麼? CSR 和 SSR 的超詳細比較!](https://shubo.io/rendering-patterns/)
+> - [Node.js Full Course for Beginners | Complete All-in-One Tutorial | 7 Hours](https://www.youtube.com/embed/f2EqECiTBL8)
+> - [HTML Favicon](https://www.w3schools.com/html/html_favicon.asp)
+> - [@use JSDoc](https://jsdoc.app/tags-type.html)
+> - [Rendering on the Web](https://web.dev/rendering-on-the-web/)
+> - [對於 SSR 的思考與使用場景](https://blog.kalan.dev/2020-11-23-rethink-ssr)
+> - [[教學] CSR 和 SSR 的差別是什麼? CSR 和 SSR 的超詳細比較!](https://shubo.io/rendering-patterns/)
