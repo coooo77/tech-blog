@@ -985,6 +985,14 @@ app.use(credentials)
 
 略
 
+### 取得隨機 secret
+
+terminal 執行 node，接著執行以下程式碼
+
+```console
+require('crypto').randomBytes(64).toString('hex')
+```
+
 ### 參考來源
 
 > - [Node.js Full Course for Beginners | Complete All-in-One Tutorial | 7 Hours](https://www.youtube.com/embed/f2EqECiTBL8)
