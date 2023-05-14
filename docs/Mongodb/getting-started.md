@@ -7,58 +7,58 @@ tags:
 
 ## 基本設定
 
-01. 登入 MongoDB
-<img src="./img//01_login.jpg" width="700">
+1.  登入 MongoDB
+    <img src="./img//01_login.jpg" width="700">
 
-01. 選擇新增 project
-<img src="./img//02_add_new_project.jpg" width="700">
+1.  選擇新增 project
+    <img src="./img//02_add_new_project.jpg" width="700">
 
-01. 設定 project - 1
-<img src="./img//03_1_set_project.jpg" width="700">
+1.  設定 project - 1
+    <img src="./img//03_1_set_project.jpg" width="700">
 
-01. 設定 project - 2，預設 project owner 會有存取權
-<img src="./img//03_2_set_project.jpg" width="700">
+1.  設定 project - 2，預設 project owner 會有存取權
+    <img src="./img//03_2_set_project.jpg" width="700">
 
-01. 建立 data base - 1
-<img src="./img//04_create_data_base.jpg" width="700">
+1.  建立 data base - 1
+    <img src="./img//04_create_data_base.jpg" width="700">
 
-01. 設定 data base - 2
-<img src="./img//05_deploy_data_base.jpg" width="700">
+1.  設定 data base - 2
+    <img src="./img//05_deploy_data_base.jpg" width="700">
 
-01. 建立 data base 使用者，這邊紀錄帳號、密碼，後面會使用到
-<img src="./img//06_add_data_base_user.jpg" width="700">
+1.  建立 data base 使用者，這邊紀錄帳號、密碼，後面會使用到
+    <img src="./img//06_add_data_base_user.jpg" width="700">
 
-01. 新增 collection - 1
-<img src="./img//07_1_add_collections.jpg" width="700">
+1.  新增 collection - 1
+    <img src="./img//07_1_add_collections.jpg" width="700">
 
-01. 新增 collection - 2
-<img src="./img//07_2_add_collections.jpg" width="700">
+1.  新增 collection - 2
+    <img src="./img//07_2_add_collections.jpg" width="700">
 
-01. 新增 collection - 3
-<img src="./img//08_1_connect_to_cluster.jpg" width="700">
+1.  新增 collection - 3
+    <img src="./img//08_1_connect_to_cluster.jpg" width="700">
 
-01. 新增 collection - 4
-<img src="./img//08_2_connect_to_cluster.jpg" width="700">
+1.  新增 collection - 4
+    <img src="./img//08_2_connect_to_cluster.jpg" width="700">
 
-01. 新增 collection - 5，因為目前沒有實體位址，可以直接按下新增
-<img src="./img//08_3_connect_to_cluster.jpg" width="700">
+1.  新增 collection - 5，因為目前沒有實體位址，可以直接按下新增
+    <img src="./img//08_3_connect_to_cluster.jpg" width="700">
 
-01. 新增 collection - 6
-<img src="./img//08_4_connect_to_cluster.jpg" width="700">
+1.  新增 collection - 6
+    <img src="./img//08_4_connect_to_cluster.jpg" width="700">
 
-01. 新增 collection - 7
-<img src="./img//08_5_connect_to_cluster.jpg" width="700">
+1.  新增 collection - 7
+    <img src="./img//08_5_connect_to_cluster.jpg" width="700">
 
-01. 新增 collection - 8，複製這個連結，到 nodejs 作為連線網址
-<img src="./img//08_6_connect_to_cluster.jpg" width="700">
+1.  新增 collection - 8，複製這個連結，到 nodejs 作為連線網址
+    <img src="./img//08_6_connect_to_cluster.jpg" width="700">
 
-這個連線網址代表連接的 project、DB名稱，如果不提供DB名稱，預設DB名稱是`test`
+這個連線網址代表連接的 project、DB 名稱，如果不提供 DB 名稱，預設 DB 名稱是`test`
 
 ```
 mongodb+srv://<project>:<password>@cluster0.jjyae1q.mongodb.net/<database>?retryWrites=true&w=majority
 ```
 
-01. 設定連線
+1.  設定連線
 
 ```typescript title="src\config\dbConn.ts"
 import mongoose from 'mongoose'
@@ -66,7 +66,7 @@ import mongoose from 'mongoose'
 export async function connectDB() {
   try {
     if (!process.env.DATABASE_URI) throw Error('No DATABASE_URI available')
-    
+
     await mongoose.connect(process.env.DATABASE_URI)
   } catch (error) {
     console.log(error)
@@ -75,6 +75,7 @@ export async function connectDB() {
 ```
 
 Project 啟動時連線
+
 ```typescript title="src\index.ts"
 // external methods
 import dotenv from 'dotenv'
@@ -105,7 +106,7 @@ mongoose.connection.on('error', (err) => {
 
 ## Schema 建立
 
-連接到 DB 後，會在該 DB 下主動建立 collection，以這個 Schema 做例子，就算沒有設定collection，創建的時候會主動設定名為 `users` 的 collection
+連接到 DB 後，會在該 DB 下主動建立 collection，以這個 Schema 做例子，就算沒有設定 collection，創建的時候會主動設定名為 `users` 的 collection
 
 ```typescript
 import mongoose, { Document, Schema } from 'mongoose'
@@ -132,6 +133,11 @@ const userSchema = new Schema<IUser>({
       default: 'Employee',
     },
   ],
+  // roles 也可以這樣寫
+  roles: {
+    type: [String],
+    default: ['Employee'],
+  },
   active: {
     type: Boolean,
     default: true,
@@ -141,4 +147,19 @@ const userSchema = new Schema<IUser>({
 const User = mongoose.model<IUser>('User', userSchema)
 
 export default User
+```
+
+## 限制字串大小寫
+
+如果想要限定無視字串大小寫，例如創造帳號時，username `John` 跟 `john` 都當作同一個 username 時，可以用 collation
+
+```typescript
+import User from '../models/User'
+
+const duplicate = await User.findOne({ username }).collation({ locale: 'en', strength: 2 }).lean().exec()
+
+if (duplicate && duplicate?._id.toString() !== id) {
+  res.status(409).json({ message: 'Duplicate username' })
+  return
+}
 ```
