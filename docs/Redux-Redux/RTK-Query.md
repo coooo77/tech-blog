@@ -167,9 +167,48 @@ export const { useGetTodosQuery, useAddTodoMutation, useUpdateTodoMutation, useD
 ```
 
 :::note
+關於 validateStatus，如果要寫在 injectEndpoints 裡面，要另外改成下列寫法
 
-injectEndpoints 目前似乎不能用 validateStatus
 [Using validateStatus on RTK Query baseApi](https://stackoverflow.com/questions/72647439/using-validatestatus-on-rtk-query-baseapi)
+
+```tsx
+const apiSlice = createApi({
+  // 不重要的設定
+})
+
+// 這邊是後端出錯會傳的客製錯誤訊息
+export interface ErrorRes {
+  message: string
+  isError: boolean
+}
+
+const notesApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getNotes: builder.query<EntityState<Note>, void>({
+      // 這裡要改成回傳成物件形式
+      query: () => ({
+        url: '/notes',
+        // 這邊的 response 是 fetch api 的 Response
+        validateStatus: (response: Response, result: NoteRes[] | ErrorRes) => {
+          const isFailed = response.status !== 200
+          // 這邊的 result.isError 是後端 api 自行定義的 key
+          const isError = !Array.isArray(result) && result.isError
+          return !(isFailed || isError)
+        },
+      }),
+      // 其他設定還是寫在外面
+      transformResponse: (responseData: NoteRes[]) => {
+        const loadedNotes = responseData.map((note) => ({ ...note, id: note._id }))
+        return notesAdapter.setAll(initialState, loadedNotes)
+      },
+      providesTags: (result, error, arg) => {
+        return result?.ids
+          ? [{ type: 'Note' as const, id: 'LIST' }, ...result.ids.map((id) => ({ type: 'Note' as const, id }))]
+          : [{ type: 'Note' as const, id: 'LIST' }]
+      },
+    })
+})
+```
 
 :::
 
@@ -378,16 +417,16 @@ export type RootState = ReturnType<typeof store.getState>
 ```
 
 ```typescript title="src\features\notes\NotesList.tsx"
-  const {
-    data: notes,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetNotesQuery(undefined, {
-    // 有了 listener 就能設定這些優化功能
-    pollingInterval: 15000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-  })
+const {
+  data: notes,
+  isLoading,
+  isSuccess,
+  isError,
+  error,
+} = useGetNotesQuery(undefined, {
+  // 有了 listener 就能設定這些優化功能
+  pollingInterval: 15000,
+  refetchOnFocus: true,
+  refetchOnMountOrArgChange: true,
+})
 ```
