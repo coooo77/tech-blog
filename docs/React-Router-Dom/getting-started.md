@@ -33,11 +33,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 )
 ```
 
-* Route `index` 屬性代表預設路徑 [Ref](https://reactrouter.com/en/main/route/route#index)，等同於`/`
+- Route `index` 屬性代表預設路徑 [Ref](https://reactrouter.com/en/main/route/route#index)，等同於`/`
 
 > Determines if the route is an index route. Index routes render into their parent's Outlet at their parent's URL (like a default child route).
 
-* Routes 則是會根據網址去匹配底下的組件 [Ref](https://reactrouter.com/en/main/components/routes#routes)
+- Routes 則是會根據網址去匹配底下的組件 [Ref](https://reactrouter.com/en/main/components/routes#routes)
 
 > Rendered anywhere in the app, <Routes> will match a set of child routes from the current location.
 
@@ -164,6 +164,12 @@ const Prefetch = () => {
       notes.unsubscribe()
       users.unsubscribe()
     }
+
+    // 也可以寫成這樣
+    useEffect(() => {
+      store.dispatch(notesApiSlice.util.prefetch('getNotes', undefined, { force: true }))
+      store.dispatch(usersApiSlice.util.prefetch('getUsers', undefined, { force: true }))
+    }, [])
   }, [])
 
   return <Outlet />
@@ -206,7 +212,6 @@ function App() {
             </Route>
           </Route>
         </Route>
-        
       </Route>
     </Routes>
   )
@@ -214,3 +219,6 @@ function App() {
 
 export default App
 ```
+
+[Prefetching Without Hooks](https://redux-toolkit.js.org/rtk-query/usage/prefetching#prefetching-without-hooks)
+[Removing a subscription](https://redux-toolkit.js.org/rtk-query/usage/usage-without-react-hooks#removing-a-subscription)
