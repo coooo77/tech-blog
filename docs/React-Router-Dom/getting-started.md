@@ -39,7 +39,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 
 - Routes 則是會根據網址去匹配底下的組件 [Ref](https://reactrouter.com/en/main/components/routes#routes)
 
-> Rendered anywhere in the app, <Routes> will match a set of child routes from the current location.
+> Rendered anywhere in the app, <Routes /> will match a set of child routes from the current location.
 
 ```jsx
 import { Routes, Route, Navigate } from 'react-router-dom'
