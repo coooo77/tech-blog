@@ -8,49 +8,49 @@ tags:
 ## 基本設定
 
 1.  登入 MongoDB
-    <img src="./img//01_login.jpg" width="700">
+    <img src="./img//01_login.jpg" width="700" />
 
 1.  選擇新增 project
-    <img src="./img//02_add_new_project.jpg" width="700">
+    <img src="./img//02_add_new_project.jpg" width="700" />
 
 1.  設定 project - 1
-    <img src="./img//03_1_set_project.jpg" width="700">
+    <img src="./img//03_1_set_project.jpg" width="700" />
 
 1.  設定 project - 2，預設 project owner 會有存取權
-    <img src="./img//03_2_set_project.jpg" width="700">
+    <img src="./img//03_2_set_project.jpg" width="700" />
 
 1.  建立 data base - 1
-    <img src="./img//04_create_data_base.jpg" width="700">
+    <img src="./img//04_create_data_base.jpg" width="700" />
 
 1.  設定 data base - 2
-    <img src="./img//05_deploy_data_base.jpg" width="700">
+    <img src="./img//05_deploy_data_base.jpg" width="700" />
 
 1.  建立 data base 使用者，這邊紀錄帳號、密碼，後面會使用到
-    <img src="./img//06_add_data_base_user.jpg" width="700">
+    <img src="./img//06_add_data_base_user.jpg" width="700" />
 
 1.  新增 collection - 1
-    <img src="./img//07_1_add_collections.jpg" width="700">
+    <img src="./img//07_1_add_collections.jpg" width="700" />
 
 1.  新增 collection - 2
-    <img src="./img//07_2_add_collections.jpg" width="700">
+    <img src="./img//07_2_add_collections.jpg" width="700" />
 
 1.  新增 collection - 3
-    <img src="./img//08_1_connect_to_cluster.jpg" width="700">
+    <img src="./img//08_1_connect_to_cluster.jpg" width="700" />
 
 1.  新增 collection - 4
-    <img src="./img//08_2_connect_to_cluster.jpg" width="700">
+    <img src="./img//08_2_connect_to_cluster.jpg" width="700" />
 
 1.  新增 collection - 5，因為目前沒有實體位址，可以直接按下新增
-    <img src="./img//08_3_connect_to_cluster.jpg" width="700">
+    <img src="./img//08_3_connect_to_cluster.jpg" width="700" />
 
 1.  新增 collection - 6
-    <img src="./img//08_4_connect_to_cluster.jpg" width="700">
+    <img src="./img//08_4_connect_to_cluster.jpg" width="700" />
 
 1.  新增 collection - 7
-    <img src="./img//08_5_connect_to_cluster.jpg" width="700">
+    <img src="./img//08_5_connect_to_cluster.jpg" width="700" />
 
 1.  新增 collection - 8，複製這個連結，到 nodejs 作為連線網址
-    <img src="./img//08_6_connect_to_cluster.jpg" width="700">
+    <img src="./img//08_6_connect_to_cluster.jpg" width="700" />
 
 這個連線網址代表連接的 project、DB 名稱，如果不提供 DB 名稱，預設 DB 名稱是`test`
 
