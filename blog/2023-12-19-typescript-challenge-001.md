@@ -1,11 +1,7 @@
 ---
 slug: typescript-challenge-001
-title: Typescript challenge 001
-authors:
-  name: william chang
-  title: frontend engineer
-  url: https://github.com/coooo77
-  image_url: https://avatars.githubusercontent.com/u/8820762?v=4
+title: Typescript challenge 001 - Deep Readonly
+authors: william
 tags: [Typescript, typescript-challenge]
 ---
 
