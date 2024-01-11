@@ -1,11 +1,13 @@
 ---
 slug: typescript-challenge-001
-title: Typescript challenge 001 - Deep Readonly
+title: 001 Deep Readonly
 authors: william
 tags: [Typescript, typescript-challenge]
 ---
 
-<iframe width="640" height="360" src="https://www.youtube.com/embed/3WNrBHVX5xU" title="Deep Readonly with Rob Meyer - TypeScript Type Challenges #9 [MEDIUM]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="640" height="360" src="https://www.youtube.com/embed/3WNrBHVX5xU" title="Deep Readonly with Rob Meyer - TypeScript Type Challenges #9 [MEDIUM]"  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+
+23/12/19
 
 ### Solutions
 

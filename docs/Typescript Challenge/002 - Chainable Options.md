@@ -1,11 +1,13 @@
 ---
 slug: typescript-challenge-002
-title: Typescript challenge 002 - Chainable Options
+title: 002 Chainable Options
 authors: william
 tags: [Typescript, typescript-challenge]
 ---
 
 <iframe width="640" height="360" src="https://www.youtube.com/embed/UxxrDnJ5mIA?list=PLOlZuxYbPik180vcJfsAM6xHYLVxrEgHC" title="Chainable Options with John Chadwick - TypeScript Type Challenges #12 [MEDIUM]" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+24/01/01
 
 [challenge list](https://github.com/type-challenges/type-challenges/issues/21338)
 
