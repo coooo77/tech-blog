@@ -119,3 +119,9 @@ function example(value?: string) {
   return +value
 }
 ```
+
+## 參考
+
+- [Function Overloads](https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads)
+- [Typescript overload arrow function is not working](https://stackoverflow.com/questions/56109614/typescript-overload-arrow-function-is-not-working)
+- [Typescript class: "Overload signature is not compatible with function implementation"](https://stackoverflow.com/questions/39407311/typescript-class-overload-signature-is-not-compatible-with-function-implementa)
