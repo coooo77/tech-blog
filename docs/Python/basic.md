@@ -31,6 +31,20 @@ class str(object)
  |  errors defaults to 'strict'.
 ```
 
+或者用 dir 列舉所有屬性跟方法
+
+```python
+arr = ['1']
+print() # 取得全域變數，例如 '__name__'
+print(dir(arr))
+```
+
+取得 module 說明
+
+```py
+print(help("modules"))
+```
+
 ### print
 
 ```python
@@ -134,6 +148,8 @@ gpa = 3.3
 name = 'Peter'
 # boolean
 is_online = True
+
+print(type("string") == str) # True
 ```
 
 ### 顯式型別轉換
@@ -152,6 +168,8 @@ print(gpa, type(gpa)) #<class 'int'>
 
 student = str(student)
 print(student, type(student)) #<class 'str'>
+
+print(type(bool("string"))) #<class 'bool'>
 ```
 
 ### 隱式型別轉換
@@ -258,12 +276,88 @@ temp = int(input('輸入溫度: '))
 
 if temp > 24 and temp < 30:
   print('適宜溫度')
+elif not temp > 50
+  print('溫度不超過 50')
 else :
   print('不適宜溫度')
 ```
 
-```python
+### membership operators
 
+used to test whether a value or variable is found in a sequence (string, list, tuple, set or dictionary)
+
+1. in
+2. not in
+
+```python
+name = "John"
+
+print("J" in name) # True
+print("Joh" in name) # True
+print("hD" not in name) # True
+print("L" not in name and "hn" in name) # True
+```
+
+### Conditional (ternary) operator
+
+```python
+num = 1
+print("Positive" if num > 0 else "Negative")
+# Positive
+```
+
+相當於 js
+
+```javascript
+let num = 1
+console.log(num > 0 ? 'Positive' : 'Negative')
+```
+
+### match
+
+相當於 js 的 switch 語法
+
+```python
+def day_of_week(day):
+  match day:
+    case 0:
+      return "0"
+    case 1:
+      return "sunday"
+    case 2:
+      return "monday"
+    case 3:
+      return "tuesday"
+    case 4:
+      return "wednesday"
+    case 5:
+      return "thursday"
+    case 6:
+      return "friday"
+    case 7:
+      return "saturday"
+    case _:
+      return "not a valid day"
+
+print(day_of_week(1)) # sunday
+print(day_of_week(True)) # sunday
+print(day_of_week(False)) # 0
+print(day_of_week([])) # not a valid day
+```
+
+如果要合併條件，需要透過 or 運算符號 |
+
+```python
+def is_weekend(day):
+  match day:
+    case 'saturday' | "sunday":
+      return True
+    case _:
+      return False
+
+print(is_weekend("sunday")) # True
+print(is_weekend("saturday")) # True
+print(is_weekend("birthday")) # False
 ```
 
 ## 字串方法
@@ -301,7 +395,9 @@ booleanString2 = 'cat'
 print(booleanString2.isalpha()) # True
 ```
 
-### 字串索引
+### 字串索引 indexing
+
+參數是 [start : end : step]，每個參數都可以省略
 
 ```python
 numbers = '0123456789'
@@ -323,9 +419,140 @@ print(numbers[8:]) # 89
 mail = 'example@yahoo.com.tw'
 index = mail.index('@')
 print(mail[(index+1):]) # yahoo.com.tw
+
+credit_number = "123456789"
+print(credit_number[::3]) # 147
+print(credit_number[-3:]) # 789
+print(credit_number[::-1]) # 987654321
 ```
 
-### f-string 格式化字串
+### f-string 格式化字串 (Format Specifier)
+
+#### 固定小數點位數
+
+- :.(number)f ➡️ round to that may decimal places (fixed point)
+
+```python
+value1 = 3.1415
+print(f"{value1:.2f}") # 3.14
+
+value2 = -9.641561
+print(f"{value2:.2f}") # -9.64
+
+value3 = 5
+print(f"{value3:.2f}") # 5.00
+```
+
+#### 指定文字長度
+
+- :(number) ➡️ allocate that many spaces
+
+如果文字本身小於長度，會用空格填空
+
+```python
+value1 = 3.1415
+print(f"{value1:10}") #     3.1415
+
+value2 = -9.641561
+print(f"{value2:10}") #  -9.641561
+
+value3 = 5
+print(f"{value3:10}") #          5
+```
+
+- :03 ➡️ allocate and zero pad that many spaces
+  如果數字前面補上 0，會用 0 填空
+
+```python
+value1 = 3.1415
+print(f"{value1:010}") # 00003.1415
+
+value2 = -9.641561
+print(f"{value2:010}") # -09.64156
+
+value3 = 5
+print(f"{value3:010}") # 0000000005
+```
+
+#### 排列
+
+- :< ➡️ left justify
+- :> ➡️ right justify
+- :^ ➡️ center align
+
+```python
+value = 9
+print(f"{value:<10}")
+print(f"{value:>10}")
+print(f"{value:^10}")
+print(f"{value:<010}")
+print(f"{value:>010}")
+print(f"{value:^010}")
+
+"""
+9
+         9
+    9
+9000000000
+0000000009
+0000900000
+"""
+```
+
+#### 表示正、負數
+
+- :+ ➡️ use a plus sign to indicate positive value
+
+```python
+value1 = 3.1415
+print(f"{value1:+}") # +3.1415
+
+value2 = -9.641561
+print(f"{value2:+}") # -9.641561
+
+value3 = 5
+print(f"{value3:+}") # +5
+```
+
+#### 將符號擺放至最左
+
+- := ➡️ place sign to leftmost position
+
+```python
+value1 = -3.1
+print(f"{value1:10}") #       -3.1
+print(f"{value1:=10}") # -      3.1
+```
+
+#### 文字前面補上空格
+
+- : ➡️ insert a space before position numbers
+
+```python
+value1 = 3.1415
+print(f"{value1: }") #  3.1415
+print(f"{value1:+}") # +3.1415
+
+value2 = -9.641561
+print(f"{value2: }") # -9.641561
+print(f"{value2:+}") # -9.641561
+
+value3 = 5
+print(f"{value3: }") #  5
+print(f"{value3:+}") # +5
+```
+
+#### 格式化數字
+
+- :, ➡️ comma separator
+
+```python
+value = 90000000
+print(f"{value:,}") # 90,000,000
+print(f"{value:,.2f}") # 90,000,000.00
+```
+
+#### 總結
 
 ```python
 # 字串顯示數值
@@ -386,6 +613,26 @@ print(
 
 ## 迴圈
 
+### iterables
+
+```python
+iterables = { list: [1,2], tuple: (3,4), set: {5,6}, str: '789' }
+
+for iterable in iterables.values():
+  for item in iterable:
+    print(item, end="/")
+# 1/2/3/4/5/6/7/8/9/
+
+dic = { 'a': 1, 'b': 2 }
+
+for key, value in dic.items():
+  pass
+for value in dic.values():
+  pass
+for key in dic.keys():
+  pass
+```
+
 ### while
 
 ```python
@@ -402,6 +649,13 @@ while True:
   isCancel = input('cancel loop?')
   if (isCancel.lower() == "yes")
     break
+
+prompt_text = '輸入食物名稱 (輸入 q 離開)'
+food = input(prompt_text)
+
+while not food == 'q':
+  print(f"你輸入食物名稱{food}")
+  food = input(prompt_text)
 ```
 
 ### for
@@ -409,8 +663,21 @@ while True:
 for 變數 in 迭代物:
 
 ```python
+# 逐一迭代文字
+char = "this is a python"
+for x in char:
+  print('x value', x)
+
 # 輸出 0 ~ 10 (不包含 11)
 for x in range(0, 11):
+  print('x value', x)
+
+# 輸出 10 ~ 0 (不包含 0)
+for x in range(10, 0, -1):
+  print('x value', x)
+
+# 輸出 0 ~ 10 的 2 的倍數
+for x in range(0, 11, 2):
   print('x value', x)
 
 # 輸出 10 ~ 0 (不包含 11)
@@ -516,6 +783,11 @@ print(fruits.index('cherry'))
 # ['orange', 'orange', 'cherry', 'apple']
 fruits.reverse()
 print(fruits)
+
+# 007 複製
+# ['+', '+', '+', '+', '+']
+arr = ["+"] * 5
+print(arr)
 ```
 
 ### sets
@@ -535,6 +807,11 @@ for fruit in fruits_set:
 # 003 Set 是否有該元素
 if "apple" in fruits_set:
     print("\napple is in the set")
+
+# 004 建立空 set
+container = set()
+container.add('5')
+print(container) # {'5'}
 ```
 
 ### tuple
@@ -572,6 +849,11 @@ capital = {
   "Seoul": "South Korea",
   "Beijing": "China",
 }
+
+print("Tokyo" in capital)
+# True
+print("Tokyo" not in capital)
+# False
 
 # 001 get 特定值
 print(capital["Tokyo"])
@@ -625,9 +907,16 @@ greet("Alice") # Hello, Alice
 greet("Tom", "hi") # hi, Tom
 ```
 
-### 關鍵字參數
+### 關鍵字參數 (keyword arguments)
 
-帶多參數函式、提升可讀性、更少限制傳遞參數(?)
+- an argument preceded by an identifier, helps with readability order; order of arguments doesn't matter
+- 帶多參數函式、提升可讀性、更少限制傳遞參數(?)
+
+例如 print 常用 end 指定列印的文字後面該帶什麼字串
+
+```python
+print("say my name", end=" ")
+```
 
 ```python
 def get_phone(country_code, area_code, first, second):
@@ -639,6 +928,16 @@ def get_phone(country_code, area_code, first, second):
 
 # +886 (02) 88-6
 print(get_phone(country_code="886", area_code="02", first="88", second="6"))
+
+# 指定 keyword arguments 後，可以不依照順序
+# +886 (02) 88-6
+print(get_phone(first="88", second="6", country_code="886", area_code="02"))
+
+# 沒有指定的 keyword 一定要在前，否則噴錯
+# +886 (02) 88-6
+print(get_phone("886", area_code="02", first="88", second="6"))
+# SyntaxError: positional argument follows keyword argument
+print(get_phone(area_code="02", first="88", second="6", "886"))
 ```
 
 ### args、kwargs
@@ -685,6 +984,139 @@ print_info(name="John", age=30, city="New York")
 # city: New York
 ```
 
+args、kwargs 可以同時使用
+
+```python
+def accept(*args, **kwargs):
+  for a in args:
+    print(f"args {a};", end=" ")
+
+  print()
+
+  for key, value in kwargs.items():
+    print(f"key: {key}; value: {value}")
+
+
+accept("my", "name", "is", name="john")
+"""
+args my; args name; args is;
+key: name; value: john
+"""
+
+accept("my", "name", "is") # 這樣寫不會噴錯
+accept(name="john") # 這樣寫不會噴錯
+
+# args 一定要在前，這樣寫是錯誤的
+def accept2(**kwargs, *args):
+  for a in args:
+    print(f"args {a};", end=" ")
+
+  print()
+
+  for key, value in kwargs.items():
+    print(f"key: {key}; value: {value}")
+```
+
+### Decorator
+
+一個能代理 function 的 function，能夠在沒有更動原本 function 情況下作額外處理
+
+```python
+def add_text(func):
+   def wrapper():
+      print(f"hack function")
+      func()
+   return wrapper
+
+@add_text
+def raw_function():
+  print(f"this is raw fn")
+
+raw_function()
+# hack function
+# this is raw fn
+```
+
+decorator 一定要返回 function，否則會立刻執行，不管有沒有執行該 function
+
+```python
+def add_text(func):
+  print(f"hack function")
+  func()
+
+@add_text
+def raw_function():
+  print(f"this is raw fn")
+
+# 😒 雖然沒有呼叫 raw_function 但是 add_text 執行了
+# hack function
+# this is raw fn
+```
+
+decorator 可以複數
+
+```python
+def add_text(func):
+  def wrapper():
+    print(f"add_text")
+    func()
+  return wrapper
+
+def add_info(func):
+  def wrapper():
+    print(f"add_info")
+    func()
+  return wrapper
+
+@add_info
+@add_text
+def raw_function():
+  print(f"this is raw fn")
+
+raw_function()
+# add_info
+# add_text
+# this is raw fn
+```
+
+decorator 也能傳也能傳入帶入的參數
+
+```python
+def add_text(func):
+  def wrapper(*args, **kwargs):
+    print("args", args, "kwargs", kwargs)
+    func(*args, **kwargs)
+  return wrapper
+
+@add_text
+def raw_function(name, value):
+  print(f"this is raw fn, name: {name}; value: {value}")
+
+raw_function('cat', value="True")
+# args ('cat',) kwargs {'value': 'True'}
+# this is raw fn, name: cat; value: True
+```
+
+## variable scope
+
+where a variable is visible and accessible.
+scope resolution = Local ➡️ Enclosed ➡️ Global ➡️ Built-in
+
+變數會先從執行的位置 (local) 尋找，沒有的話，依序向上尋找
+
+```python
+from math import e
+
+e # built-in
+
+x = 0 # Global
+
+def func1():
+  x = 1 # Enclosed
+  def func2():
+    x = 2 # Local
+```
+
 ## 模組
 
 ```python
@@ -720,6 +1152,9 @@ import index as my_module
 
 print(my_module.pi) # 3.141592653589793
 print(my_module.square(4)) # 16
+
+from math import pi
+print(pi) # 3.141592653589793
 ```
 
 ## 異常處理
@@ -777,6 +1212,92 @@ except (ValueError, ZeroDivisionError):
   print("Error")
 ```
 
+### 主動拋錯
+
+使用 raise 關鍵字來主動拋出錯誤
+
+```python
+def divide(a, b):
+    if b == 0:
+        raise ValueError("除數不能為零！")  # 拋出 ValueError 異常
+    return a / b
+
+try:
+    result = divide(10, 0)
+    print(result)
+except ValueError as e:
+    print(f"發生錯誤：{e}")
+
+print("-" * 20)
+
+def get_item(index, my_list):
+    if not (0 <= index < len(my_list)):
+        raise IndexError("索引超出範圍！")  # 拋出 IndexError 異常
+    return my_list[index]
+
+try:
+    my_list = [1, 2, 3]
+    item = get_item(5, my_list)
+    print(item)
+except IndexError as e:
+    print(f"發生錯誤：{e}")
+```
+
+#### 拋出自訂異常
+
+```python
+class InsufficientFundsError(Exception):
+    """
+    自訂異常：餘額不足
+    """
+    def __init__(self, message="餘額不足，交易失敗！", required_amount=0, current_balance=0):
+        super().__init__(message)
+        self.required_amount = required_amount
+        self.current_balance = current_balance
+
+def withdraw(amount, balance):
+    if amount > balance:
+        raise InsufficientFundsError(
+            message=f"提款失敗：需要 {amount}，但餘額只有 {balance}。",
+            required_amount=amount,
+            current_balance=balance
+        )
+    return balance - amount
+
+try:
+    current_balance = 500
+    withdraw_amount = 700
+    new_balance = withdraw(withdraw_amount, current_balance)
+    print(f"新餘額：{new_balance}")
+except InsufficientFundsError as e:
+    print(f"發生自訂錯誤：{e}") # 發生自訂錯誤：提款失敗：需要 700，但餘額只有 500。
+    print(f"需要金額：{e.required_amount}") # 需要金額：700
+    print(f"目前餘額：{e.current_balance}") # 目前餘額：500
+```
+
+#### 再次拋出異常（Re-raising an Exception）
+
+只使用 raise 關鍵字而**不帶任何參**
+
+```python
+def process_data(data):
+    try:
+        # 假設這裡會發生一些錯誤
+        if not data:
+            raise ValueError("數據不能為空！")
+        print(f"正在處理數據：{data}")
+        # ... 其他處理邏輯 ...
+    except ValueError as e:
+        print(f"在 process_data 中捕獲到錯誤：{e}")
+        # 可以在這裡執行日誌記錄或清理工作
+        raise  # 再次拋出相同的錯誤
+
+try:
+    process_data(None)
+except ValueError as e:
+    print(f"在主程式中捕獲到錯誤：{e}")
+```
+
 ## 檔案操作
 
 ### 偵測
@@ -803,6 +1324,103 @@ def isExist(path):
 
 isExist(path_1)
 isExist(path_2)
+```
+
+#### with
+
+稱為上下文管理器 (Context Manager)，它提供了一種簡潔且安全的方式來處理資源，確保資源在不再需要時被正確地獲取（設置）和釋放（清理），即使在程式碼執行過程中發生錯誤也能正常運作
+
+##### 功能
+
+1. 確保資源正確釋放
+
+with 語法最核心的功能。在處理檔案、網路連線、鎖定（lock）等資源時，我們需要確保它們在完成操作後被關閉或釋放，以避免資源洩漏、死鎖或其他潛在問題。with 語法自動處理了這個過程，無論程式碼是否正常執行完畢，或是否遇到例外，都能保證資源被清理
+
+沒有 with，需要使用 try...finally 區塊來確保資源被釋放，這會讓程式碼變得冗長且容易出錯
+
+```python
+file = open("my_file.txt", "r")
+try:
+    content = file.read()
+    # 處理內容
+finally:
+    file.close() # 必須手動關閉
+```
+
+open() 函式回傳的檔案物件就是一個上下文管理器。當程式碼進入 with 區塊時，檔案會被打開；當程式碼離開 with 區塊時（無論是正常結束還是因為錯誤），file.close() 會自動被呼叫
+
+```python
+with open("my_file.txt", "r") as file:
+    content = file.read()
+    # 處理內容
+# 檔案在離開 with 區塊後會自動關閉
+```
+
+##### 上下文管理器協定
+
+一個物件如果想支援 with 語法，它必須實作以下兩個特殊方法：
+
+- **enter**(self)：
+  - 當程式碼進入 with 區塊時，這個方法會被呼叫。
+  - 它的回傳值會被賦值給 as 子句後面的變數（例如 with open(...) as file: 中的 file）。
+  - 通常用於資源的獲取或初始化。
+- **exit**(self, exc_type, exc_val, exc_tb)：
+  - 當程式碼離開 with 區塊時，這個方法會被呼叫。無論是正常結束、break、continue、return 還是發生例外，它都會被呼叫。
+  - 參數 exc_type、exc_val、exc_tb 分別代表例外類型、例外值和追溯資訊。如果沒有發生例外，它們都會是 None。
+  - 主要用於資源的釋放或清理。如果 **exit** 方法回傳 True，表示它已經處理了例外，例外將不會被傳播；如果回傳 False 或沒有回傳值（預設），則例外會繼續傳播。
+
+```python
+class MyContext:
+    def __init__(self, name):
+        self.name = name
+        print(f"初始化 MyContext({self.name})")
+
+    def __enter__(self):
+        print(f"進入 with 區塊：{self.name} - 資源獲取")
+        return self.name.upper() # 回傳給 'as' 後的變數
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print(f"離開 with 區塊：{self.name} - 資源釋放")
+        if exc_type:
+            print(f"發生例外：類型={exc_type.__name__}, 值={exc_val}")
+            # return True # 如果回傳 True，例外將被抑制
+
+print("--- 開始示範 ---")
+with MyContext("test_resource") as resource:
+    print(f"在 with 區塊內，資源變數為：{resource}")
+    # 這裡可以執行一些操作
+
+print("--- 示範結束 ---")
+
+print("\n--- 帶有例外的示範 ---")
+try:
+    with MyContext("error_resource") as resource:
+        print(f"在 with 區塊內，資源變數為：{resource}")
+        raise ValueError("這是一個模擬的錯誤")
+except ValueError as e:
+    print(f"外部捕獲到例外：{e}")
+
+print("--- 帶有例外的示範結束 ---")
+```
+
+輸出
+
+```console
+--- 開始示範 ---
+初始化 MyContext(test_resource)
+進入 with 區塊：test_resource - 資源獲取
+在 with 區塊內，資源變數為：TEST_RESOURCE
+離開 with 區塊：test_resource - 資源釋放
+--- 示範結束 ---
+
+--- 帶有例外的示範 ---
+初始化 MyContext(error_resource)
+進入 with 區塊：error_resource - 資源獲取
+在 with 區塊內，資源變數為：ERROR_RESOURCE
+離開 with 區塊：error_resource - 資源釋放
+發生例外：類型=ValueError, 值=這是一個模擬的錯誤
+外部捕獲到例外：這是一個模擬的錯誤
+--- 帶有例外的示範結束 ---
 ```
 
 ### 讀取
@@ -916,12 +1534,12 @@ send2trash = "^1.8"
 """
 
 class Car:
-  number_of_wheels = 4
+  number_of_wheels = 4 # class variables
 
   def __init__(self, make, model, year, color):
     # 初始化
 
-    # 賦值
+    # 賦值給 instance variables
     self.make = make
     self.year = year
     self.model = model
@@ -933,6 +1551,8 @@ class Car:
 car_1 = Car("Toyota", "Altis", 2021, "Blue")
 car_2 = Car("Ford", "kuga", 1990, "White")
 
+print(car_1) # <__main__.Car object at 0x000001D4CA3B6900> ⬅️ 記憶體位址
+print(type(car_1) == Car) # True
 print(car_1.model) # Altis
 print(car_2.model) # kuga
 
@@ -940,6 +1560,22 @@ car_1.drive() # Altis 行駛中
 
 car_1.number_of_wheels = 2
 print(car_1.number_of_wheels) # 2
+```
+
+- class variables 是所有 class 共有的數值
+- class variables are shared among all instances of a class, defined outside the constructor, allow you to share data among all objects created from that class
+
+```python
+class Car:
+  num_of_instance = 0
+
+  def __init__(self):
+    Car.num_of_instance += 1
+
+car_1 = Car()
+car_2 = Car()
+
+print(f"num of inst: {Car.num_of_instance}") # 2
 ```
 
 ### 繼承
@@ -997,6 +1633,63 @@ car.drive().turn_on()
 
 ### 繼承
 
+multiple inheritance = inherit from more than one parent class
+
+- C(A, B)
+
+multilevel inheritance
+
+- inherit from a parent which inherits from another parent.
+- C(B) ⬅️ B(A) ⬅️ A
+
+```python
+class Animal:
+  def __init__(self, name):
+    print(f"animal {name} init")
+    self.name = name
+
+class Prey(Animal):
+  def flee(self):
+    print(f"{self.name} fleeing")
+
+class Predator(Animal):
+  def hunt(self):
+    print(f"{self.name} hunting")
+
+class Rabbit(Prey):
+  pass
+
+class Tiger(Predator):
+  pass
+
+class Fish(Predator, Prey):
+  pass
+
+rabbit = Rabbit("Mr. rabbit")
+# animal Mr. rabbit init
+rabbit.flee()
+# Mr. rabbit fleeing
+
+tiger = Tiger("Ms. Tiger")
+# animal Ms. Tiger init
+tiger.hunt()
+# Ms. Tiger hunting
+
+fish = Fish("Lady Fish")
+# animal Lady Fish init
+fish.flee()
+# Lady Fish fleeing
+fish.hunt()
+# Lady Fish hunting
+```
+
+#### SUPER
+
+- Function used in a child class to call methods from a parent class (super class), allows to extend the functionality of the inherit methods
+- 繼承父 class，複用功能
+
+例子 001
+
 ```python
 class Rectangle:
   def __init__(self, length, width):
@@ -1022,6 +1715,146 @@ sq = Square(500, 500)
 # 直接使用父 class init 方法
 tr = Triangle(20, 600)
 # Rectangle init length: 20; width:600
+```
+
+例子 002
+
+```python
+class Circle():
+  def __init__(self, color, radius):
+    self.color = color
+    self.radius = radius
+
+class Square():
+  def __init__(self, color, width):
+    self.color = color
+    self.width = width
+```
+
+可以簡化成
+
+```python
+class Shape():
+  def __init__(self, color):
+    self.color = color
+
+  def describe(self):
+    print(f"color: {self.color}")
+
+class Circle(Shape):
+  def __init__(self, color, radius):
+    super().__init__(color)
+    self.radius = radius
+
+  def describe(self):
+    print(f"circle color: {self.color}")
+
+class Square(Shape):
+  def __init__(self, color, width):
+    super().__init__(color)
+    self.width = width
+
+c = Circle("red", 5)
+c.describe() # circle color: red
+
+s = Square("blue", 10)
+s.describe() # color: blue
+```
+
+### classmethod
+
+取得該 class 的屬性、參數，通常用於
+
+1. 當作工廠方法
+
+```python
+class Shape:
+    def __init__(self, color):
+        print(f"init {color}")
+        self.color = color
+
+    def show_color(self):
+        print(f"This shape's color is {self.color}.")
+
+    @classmethod
+    def create_blue_shape(cls):
+        """
+        這是一個工廠方法。
+        cls 參數接收到的是 Shape 這個類別。
+        回傳一個 color 為 'blue' 的 Shape 實例。
+        """
+        print(f"cls: {cls}") # cls: <class '__main__.Shape'>
+        return cls('blue')
+
+# 不需要先建立實例，直接用類別呼叫 classmethod
+blue_shape = Shape.create_blue_shape()
+
+blue_shape.show_color()
+# 輸出: This shape's color is blue.
+```
+
+2. 操作類別屬性
+
+```python
+class Shape:
+    # 這是一個類別屬性，所有 Shape 實例共享
+    shape_type = 'General Shape'
+
+    def __init__(self, color):
+        # 這是實例屬性
+        self.color = color
+
+    @classmethod
+    def describe(cls):
+        """
+        cls 參數接收到的是 Shape 這個類別。
+        它可以存取類別屬性 shape_type。
+        """
+        print(f"All shapes created from this class are of type: {cls.shape_type}")
+
+# 直接透過類別呼叫
+Shape.describe()
+# 輸出: All shapes created from this class are of type: General Shape
+```
+
+### static methods
+
+- a method that belong to a class rather than any object from that class (instance). Usually used for general utility functions
+- Instance methods: best for operations on instances of the class (objects)
+- Static methods: best from utility functions that do not need access to class data
+
+```python
+
+class Employee:
+  @staticmethod
+  def is_valid_position(position):
+    return position in ["Cook", "Janitor"]
+
+print(Employee.is_valid_position("Cashier")) # False
+print(Employee.is_valid_position("Cook")) # True
+```
+
+### class method
+
+allow operations related to the class itself, take (cls) as the first parameter, which represents the class itself
+
+```python
+class Student:
+  count = 0
+  def __init__(self, name):
+    self.name = name
+    Student.count += 1
+
+  # instance method
+  def info(self):
+    return f"name: {self.name}"
+
+  @classmethod
+  def total_student_num(cls):
+    return f"total num of students: {cls.count}"
+
+Student("Tom")
+print(Student.total_student_num()) # total num of students: 1
 ```
 
 ### 傳遞物件為引數
@@ -1065,6 +1898,117 @@ def catch(duck: Duck):
   duck.talk(duck) # Chicken is clucking
 
 catch(Chicken)
+```
+
+### Dunder methods
+
+- 相當於 JS 中的 toString、valueOf.
+- magic methods, dunder methods (double underscore) **init**, **str**, **eq**, they are automatically called by many of Python's built-in operations. they allow developers to define or customize the behavior of objects
+
+```python
+class Book:
+  def __init__(self, title, author, num_pages):
+    self.title = title
+    self.author = author
+    self.num_pages = num_pages
+
+  def __str__(self):
+    return f"'{self.title}' by {self.author}"
+
+  def __eq__(self, other):
+    return self.title == other.title and self.author == other.author
+
+  def __sub__(self, other):
+    return self.num_pages - other.num_pages
+
+  def __lt__(self, other):
+    return self.num_pages < other.num_pages
+
+  def __gt__(self, other):
+    return self.num_pages > other.num_pages
+
+  def __add__(self, other):
+    return f'{self.num_pages + other.num_pages} pages'
+
+  def __contains__(self, keyword):
+    return keyword in self.title
+
+  def __getitem__(self, key):
+    match key:
+      case 'special':
+        return 'no thing special'
+      case _:
+        return self[key]
+
+book1 = Book('相對論', '愛因斯坦', 869)
+book2 = Book('相對論', '愛因斯坦', 123)
+book3 = Book('建國論', '斯坦', 456)
+print(str(book1)) # '相對論' by 愛因斯坦
+print(book1 == book2) # True
+print(book1 == book3) # False
+print(book1 - book3) # 413
+print(book1 < book3) # False
+print(book1 > book3) # True
+print(book1 + book3) # 1325 pages
+print('相對' in book1) # True
+print(book1['special']) # no thing special
+```
+
+參考
+
+- [JS 中 toString()和 valueOf()的用法及两者的区别](https://blog.csdn.net/Web_J/article/details/84106129)
+- [更 Python 的 Pythonic Coding – Dunder Method 篇](https://zhung.com.tw/article/more-pythonic-python-code-dunder-methods/)
+
+### @property
+
+- 類似於 JS class 的 private property 以及 getter、setter 用法
+- decorator used to define a method as property (it can be accessed like an attribute)
+- benefit: ass additional logic when read, write or delete attributes
+- gives getter, setter and delete method
+
+```python
+class Rectangle:
+  def __init__(self, width, height):
+    self._width = width
+    self._height = height
+
+  # @property: 把一個方法變成屬性，這裡定義了 @width 屬性
+  @property
+  def width(self):
+    return f"{self._width:.1f}cm"
+
+  @property
+  def height(self):
+    return f"{self._height:.1f}cm"
+
+  @width.setter
+  def width(self, new_value):
+    if new_value > 0:
+      self._width = new_value
+    else:
+      raise ValueError("寬度不能小於 0")
+
+  # @width 屬性指定 getter，這會覆蓋 @property 定義的 width
+  @width.getter
+  def width(self):
+    return f"get value: {self._width}"
+
+  @width.deleter
+  def width(self):
+    print(f"you delete width!!")
+    del self._width
+
+rec = Rectangle(5, 10)
+print(rec.width)
+# get value: 5
+print(rec.height)
+# 10.0cm
+del rec.width
+# you delete width!!
+print(rec.width)
+# AttributeError: 'Rectangle' object has no attribute '_width'. Did you mean: 'width'?
+rec.width = -1
+# ValueError: 寬度不能小於 0
 ```
 
 ## 獠牙運算符
@@ -1182,7 +2126,21 @@ print(list(filter(get_over, people)))
 
 類似 lambda 可以用比較少的語法建立列表
 
-### 列表推導式
+### 列表推導式 List comprehension
+
+寫法
+
+```python
+變數 = [表達式 for 值 in 迭代 if 條件]
+list = [expression for value in iterable if condition]
+```
+
+相當於 js
+
+```javascript
+const list = Array.from(iterable).map(expression).filter(condition)
+const list = Array.from({ length: 100 }, (value, index) => index + 1).filer((idx) => idx % 2 === 1)
+```
 
 原本的寫法
 
@@ -1244,6 +2202,128 @@ print({f"key:{key}": value_text(value) for key, value in weather.items() if valu
 # {'key:tokyo': 'current weather is rainy', 'key:la': 'current weather is cloudy'}
 ```
 
+## 判斷 entry 程式碼
+
+```python title sub.py
+print(f"sub.py __name__ value: {__name__}")
+# sub.py __name__ value: sub
+```
+
+```python title main.py
+import sub
+
+# 當 __name__ 為字串 __main__ 代表該檔案是程式執行的入口
+
+print(f"main.py __name__ value: {__name__}")
+# main.py __name__ value: __main__
+print(__name__ == '__main__')
+# True
+```
+
+- this script can be imported or run standalone
+- Functions and classes in this module an be reused without the main block of code executing
+
+```python
+def main():
+  # ....
+
+if __name__ == '__main___':
+  main()
+```
+
+- good practice
+
+  - code is modular
+  - helps readability
+  - leaves no global variables
+  - avoid unintended execution
+
+- example
+  - library = import library for functionality
+  - when running library directly, display a help page
+
+## multi threading
+
+- used to perform multiple tasks concurrently (multitasking)
+- Goof for I/O (input and output) bound tasks like reading files or fetching data from APIs threading.
+- Thread(target=name_of_function)
+
+```py
+import time
+import threading
+
+def fun_01():
+  time.sleep(2)
+  print("func 1 done")
+
+def fun_02():
+  time.sleep(4)
+  print("func 2 done")
+
+def fun_03():
+  time.sleep(6)
+  print("func 3 done")
+
+# 需要花費 2 + 4 + 6 = 12 秒跑完所有程式碼
+fun_01()
+fun_02()
+fun_03()
+
+# 需要花費 6 秒跑完所有程式碼
+chore1 = threading.Thread(target=fun_01)
+chore1.start()
+chore2 = threading.Thread(target=fun_02)
+chore2.start()
+chore3 = threading.Thread(target=fun_03)
+chore3.start()
+
+# 如果要讓所有 thread 執行完，使用 join 方法
+print("immediately")
+
+chore1.join()
+chore2.join()
+chore3.join()
+
+print("all done")
+
+"""
+整個程式碼會依序列印出
+
+immediately
+func 1 done
+func 2 done
+func 3 done
+all done
+"""
+```
+
+攜帶參數
+
+```py
+import time
+import threading
+
+def fun(msg, sec = 1):
+  time.sleep(sec)
+  print(f"msg: {msg};sec: {sec}")
+
+"""
+如果要攜帶參數，要以 tuple 型式，而且至少要兩個參數
+"""
+
+# 不合法，會拋錯
+chore1 = threading.Thread(target=fun, args=("function 1 start"))
+chore1.start()
+
+# 合法
+chore2 = threading.Thread(target=fun, args=("function 2 start",))
+chore2.start()
+
+# 合法
+chore3 = threading.Thread(target=fun, args=("function 2 start", 3))
+chore3.start()
+```
+
 ## Zip 函式
 
 ```python
@@ -1301,22 +2381,29 @@ print(dict(users))
 # {'Tom': 5, 'jimmy': 10}
 ```
 
-## 判斷 entry 程式碼
+## datetime
 
-```python title sub.py
-print(f"sub.py __name__ value: {__name__}")
-# sub.py __name__ value: sub
-```
+```py
+import datetime
 
-```python title main.py
-import sub
+date = datetime.date(2025,1,2)
+print(date) # 2025-01-02
+print(type(date)) # <class 'datetime.date'>
 
-# 當 __name__ 為字串 __main__ 代表該檔案是程式執行的入口
+time = datetime.time(12,30,0)
+print(time) # 12:30:00
+now = datetime.datetime.now()
+print(now) # 2025-06-23 00:26:16.345169
 
-print(f"main.py __name__ value: {__name__}")
-# main.py __name__ value: __main__
-print(__name__ == '__main__')
-# True
+print(now.strftime("%H:%M:%S %m-%d-%Y")) # 00:26:16 06-23-2025
+
+"""
+format https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+"""
+
+target_time = datetime.datetime(2099,1,2,12,30,1)
+
+print(now < target_time) # True
 ```
 
 ## time
@@ -1364,6 +2451,74 @@ tm_yday=1,
 tm_isdst=-1
 )
 """
+```
+
+## request api
+
+需要先透過指令 `pip install requests` 安裝套件 `requests`
+
+```py
+import requests
+# https://pokeapi.co/
+base_url = 'https://pokeapi.co/api/v2/'
+
+def get(name):
+  url = f"{base_url}/pokemon/{name}"
+  res = requests.get(url)
+
+  if res.status_code == 200:
+    return res.json()
+  else:
+    print(f"no data available for pokemon name: {name}")
+    return None
+
+res = get('pikachu')
+print(res)
+```
+
+如果需要定義 response 資料結構
+
+```py
+from typing import Dict, List, Union
+import requests
+
+# 更精確的定義方式 (推薦，因為 TypedDict 提供更好的靜態分析)
+try:
+    from typing import TypedDict
+except ImportError:
+    # Fallback for Python versions older than 3.8
+    TypedDict = Dict # 只是為了讓程式碼能跑，但失去 TypedDict 的優勢
+
+class AbilitySlot(TypedDict):
+    is_hidden: bool
+    slot: int
+
+class PokemonResponseData(TypedDict):
+  abilities: List[AbilitySlot]
+  base_experience: int
+  height: int
+  id: int
+  name: str
+  order: int
+
+
+# https://pokeapi.co/
+base_url = 'https://pokeapi.co/api/v2/'
+
+def get(name: str) -> Union[PokemonResponseData, None]:
+  url = f"{base_url}/pokemon/{name}"
+  res = requests.get(url)
+
+  if res.status_code == 200:
+    return res.json()
+  else:
+    print(f"no data available for pokemon name: {name}")
+    return None
+
+res = get('pikachu')
+
+if (res):
+  print(res['base_experience'])
 ```
 
 ## pip 套件管理
