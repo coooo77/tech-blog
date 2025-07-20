@@ -5,7 +5,10 @@ tags:
 sidebar_position: 1
 ---
 
-REF: [Python 6 小時初學者課程 (2023)](https://www.youtube.com/watch?v=lvH4-4iYjgs)
+REF:
+
+- [Python 6 小時初學者課程 (2023)](https://www.youtube.com/watch?v=lvH4-4iYjgs)
+- [Python Full Course for free 🐍 (2024)](https://www.youtube.com/watch?v=ix9cRaBkVe0)
 
 ## util
 
